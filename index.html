@@ -3,17 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>JavaScript Editor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-    <a id="js-download" href="javascript:void(0);">Click here to download your file</a>
-    <script>
-        function download(text, name) {
-            var a = document.getElementById('js-download');
-            var file = new Blob([text], {type: 'text/plain'});
-            a.href = URL.createObjectURL(file);
-            a.download = name;
-        }
-        download('file text', 'myfilename.txt');
-    </script>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <input id="js-filename" type="text" class="form-control" placeholder="Filename">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <input id="js-text" type="text" class="form-control" placeholder="Text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="js-refresh" href="javascript:void(0);" class="btn btn-success btn-lg">
+                    Refresh
+                </a>
+                <a id="js-download" href="javascript:void(0);" class="btn btn-primary btn-lg">
+                    Download
+                </a>
+            </div>
+        </div>
+        <script>
+            function download(filename, text) {
+                var a = document.getElementById('js-download');
+                var file = new Blob([text], {type: 'text/plain'});
+                a.href = URL.createObjectURL(file);
+                a.download = filename;
+            }
+            document.getElementById('js-refresh').addEventListener('click', function () {
+                download(
+                    document.getElementById('js-filename').value,
+                    document.getElementById('js-text').value
+                );
+            });
+        </script>
+    </div>
 </body>
 </html>
