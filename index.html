@@ -5,8 +5,15 @@
     <title>JavaScript Editor</title>
 </head>
 <body>
+    <a id="js-download" href="javascript:void(0);">Click here to download your file</a>
     <script>
-        console.log(FileReader);
+        function download(text, name) {
+            var a = document.getElementById('js-download');
+            var file = new Blob([text], {type: 'text/plain'});
+            a.href = URL.createObjectURL(file);
+            a.download = name;
+        }
+        download('file text', 'myfilename.txt');
     </script>
 </body>
 </html>
