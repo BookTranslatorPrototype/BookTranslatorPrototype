@@ -39,7 +39,14 @@
     }
 
     function analyze(text) {
-        return wordParser.parse(text).join();
+        const words = wordParser.parse(text);
+        const unique = new Set();
+
+        for (let word of words) {
+            unique.add(word.toLowerCase());
+        }
+
+        return Array.from(unique).join();
     }
 
     function onFileLoad(e) {
