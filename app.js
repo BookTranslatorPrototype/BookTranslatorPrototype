@@ -1,22 +1,39 @@
-function readSingleFile(event) {
-    var file = event.target.files[0];
+(function () {
+    function $(id) {
+        return document.getElementById(id);
+    }
 
-    var r = new FileReader();
-    r.onload = function (e) {
-        document.getElementById('js-text').value = e.target.result;
-    };
-    r.readAsText(file);
-}
-function download(filename, text) {
-    var a = document.getElementById('js-download');
-    var file = new Blob([text], {type: 'text/plain'});
-    a.href = URL.createObjectURL(file);
-    a.download = filename;
-}
-document.getElementById('js-refresh').addEventListener('click', function () {
-    download(
-        document.getElementById('js-filename').value,
-        document.getElementById('js-text').value
-    );
-});
-document.getElementById('js-file').addEventListener('change', readSingleFile);
+    const textInput = $('js-text');
+    const downloadButton = $('js-download');
+    const filenameInput = $('js-filename');
+    const refreshButton = $('js-refresh');
+    const fileInput = $('js-file');
+
+    function onFileLoad(e) {
+        textInput.value = e.target.result;
+    }
+
+    function readSingleFile(event) {
+        const reader = new FileReader();
+        reader.onload = onFileLoad;
+        reader.readAsText(event.target.files[0]);
+    }
+
+    function refresh() {
+        const filename = filenameInput.value;
+        const text = textInput.value;
+        if (filename && text) {
+            download(filename, text);
+        }
+    }
+
+    function download(filename, text) {
+        const file = new Blob([text], {type: 'text/plain'});
+        downloadButton.href = URL.createObjectURL(file);
+        downloadButton.download = filename;
+    }
+
+    refreshButton.addEventListener('click', refresh);
+
+    fileInput.addEventListener('change', readSingleFile);
+})();
