@@ -3,25 +3,13 @@
         return document.getElementById(id);
     }
 
-    const textInput = $('js-text');
+    let text;
     const downloadButton = $('js-download');
     const filenameInput = $('js-filename');
-    const refreshButton = $('js-refresh');
     const fileInput = $('js-file');
-
-    function onFileLoad(e) {
-        textInput.value = e.target.result;
-    }
-
-    function readSingleFile(event) {
-        const reader = new FileReader();
-        reader.onload = onFileLoad;
-        reader.readAsText(event.target.files[0]);
-    }
 
     function refresh() {
         const filename = filenameInput.value;
-        const text = textInput.value;
         if (filename && text) {
             download(filename, text);
         }
@@ -33,7 +21,17 @@
         downloadButton.download = filename;
     }
 
-    refreshButton.addEventListener('click', refresh);
+    function onFileLoad(e) {
+        text = e.target.result;
+        refresh();
+    }
+
+    function readSingleFile(event) {
+        const reader = new FileReader();
+        reader.onload = onFileLoad;
+        reader.readAsText(event.target.files[0]);
+    }
 
     fileInput.addEventListener('change', readSingleFile);
+    filenameInput.addEventListener('change', refresh);
 })();
