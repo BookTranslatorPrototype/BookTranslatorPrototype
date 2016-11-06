@@ -28,7 +28,7 @@
         }
     }
 
-    const wordParser = new WordParser(/\b(\w+)\b/g);
+    const wordParser = new WordParser(/\b([a-z-]{2,})\b/g);
     const downloadButton = $('js-download');
     const downloadResource = new DownloadResource(downloadButton);
     const filenameInput = $('js-filename');
