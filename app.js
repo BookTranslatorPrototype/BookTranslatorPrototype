@@ -13,33 +13,37 @@
         }
     }
 
-    const wordParser = new WordParser(/\b(\w+)\b/g);
+    class DownloadResource {
+        constructor(link) {
+            this.link = link;
+        }
 
-    let text;
+        updateFileName(value) {
+            this.link.download = value;
+        }
+
+        updateBlob(text) {
+            const file = new Blob([text], {type: 'text/plain'});
+            this.link.href = URL.createObjectURL(file);
+        }
+    }
+
+    const wordParser = new WordParser(/\b(\w+)\b/g);
     const downloadButton = $('js-download');
+    const downloadResource = new DownloadResource(downloadButton);
     const filenameInput = $('js-filename');
     const fileInput = $('js-file');
 
-    function refresh() {
-        const filename = filenameInput.value;
-        if (filename && text) {
-            download(filename, text);
-        }
+    function fileNameChangeEvent() {
+        downloadResource.updateFileName(filenameInput.value);
     }
 
     function analyze(text) {
         return wordParser.parse(text).join();
     }
 
-    function download(filename, text) {
-        const file = new Blob([text], {type: 'text/plain'});
-        downloadButton.href = URL.createObjectURL(file);
-        downloadButton.download = filename;
-    }
-
     function onFileLoad(e) {
-        text = analyze(e.target.result);
-        refresh();
+        downloadResource.updateBlob(analyze(e.target.result));
     }
 
     function readSingleFile(event) {
@@ -49,5 +53,5 @@
     }
 
     fileInput.addEventListener('change', readSingleFile);
-    filenameInput.addEventListener('change', refresh);
+    filenameInput.addEventListener('change', fileNameChangeEvent);
 })();
