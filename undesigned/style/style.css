@@ -48,9 +48,16 @@ h1{
 	display: block;
 	width: 150px;
 	margin: 0 auto;
-	border: none;
+	border: 1px solid transparent;
 	background-color: #008CEC;
 	color: #fff;
 	text-transform: uppercase;
 	padding: 5px;
+	transition: all 280ms ease-in-out;
 }
+	.save_button:hover{
+		border: 1px solid #008CEC;
+		background-color: transparent;
+		color: #008CEC;
+		letter-spacing: 5px;
+	}
