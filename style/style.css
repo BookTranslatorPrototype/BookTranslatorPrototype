@@ -55,9 +55,9 @@ h1{
 	padding: 5px;
 	transition: all 280ms ease-in-out;
 }
-	.save_button:hover{
-		border: 1px solid #008CEC;
-		background-color: transparent;
-		color: #008CEC;
-		letter-spacing: 5px;
-	}
+
+.save_button:hover{
+	border: 1px solid #008CEC;
+	background-color: transparent;
+	color: #008CEC;
+}
